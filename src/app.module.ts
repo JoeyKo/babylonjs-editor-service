@@ -6,7 +6,7 @@ import { TypeOrmModule, TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
 import * as joi from 'joi';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
-import { ModelModule } from './modules/model/model.module';
+import { AssetModule } from './modules/asset/asset.module';
 
 @Module({
   imports: [
@@ -75,7 +75,7 @@ import { ModelModule } from './modules/model/model.module';
             };
       },
     }),
-    ModelModule,
+    AssetModule,
   ],
   controllers: [AppController],
   providers: [AppService],

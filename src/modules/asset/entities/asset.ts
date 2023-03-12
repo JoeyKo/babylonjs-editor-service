@@ -6,13 +6,18 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-/**
- * User Entity Class
- */
+export enum AssetType {
+  MODELSROUCE = 'model_source',
+  MODEL = 'model',
+  MESH = 'mesh',
+  MATERIAL = 'material',
+  TEXTURE = 'texture',
+}
+
 @Entity({
-  name: 'model',
+  name: 'asset',
 })
-export class Model {
+export class Asset {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -24,6 +29,15 @@ export class Model {
     default: () => 'CURRENT_TIMESTAMP(6)',
   })
   created_at: Date;
+
+  @Column({
+    type: 'enum',
+    enum: AssetType,
+  })
+  type: AssetType;
+
+  @Column('json', { default: null })
+  metadata: any;
 
   @UpdateDateColumn({
     type: 'timestamp',
