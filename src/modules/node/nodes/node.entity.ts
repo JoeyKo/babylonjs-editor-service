@@ -6,23 +6,27 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-export enum AssetType {
-  MODELSROUCE = 'model_source',
-  MODEL = 'model',
-  MESH = 'mesh',
-  MATERIAL = 'material',
-  TEXTURE = 'texture',
-}
-
 @Entity({
-  name: 'asset',
+  name: 'node',
 })
-export class Asset {
+export class Node {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   name: string;
+
+  @Column('simple-array')
+  position: string[];
+
+  @Column('simple-array')
+  rotation: string[];
+
+  @Column('simple-array')
+  scaling: string[];
+
+  @Column('bool', { default: true })
+  isEnabled: boolean;
 
   @Column({ default: null })
   parentId: number | null;
@@ -32,12 +36,6 @@ export class Asset {
     default: () => 'CURRENT_TIMESTAMP(6)',
   })
   created_at: Date;
-
-  @Column({
-    type: 'enum',
-    enum: AssetType,
-  })
-  type: AssetType;
 
   @Column('json', { default: null })
   metadata: any;

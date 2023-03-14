@@ -6,6 +6,9 @@ export class CreateAssetDto {
   @ApiProperty()
   @IsNotEmpty()
   name: string;
+  
+  @ApiProperty()
+  parentId: number | null;
 
   @ApiProperty({ enum: AssetType })
   @IsNotEmpty()

@@ -8,8 +8,8 @@ import {
   Delete,
 } from '@nestjs/common';
 import { AssetService } from './asset.service';
-import { CreateAssetDto } from './dto/create-model.dto';
-import { UpdateAssetDto } from './dto/update-model.dto';
+import { CreateAssetDto } from './dto/create-asset.dto';
+import { UpdateAssetDto } from './dto/update-asset.dto';
 
 @Controller('/v1/asset')
 export class AssetController {

@@ -7,6 +7,7 @@ import * as joi from 'joi';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
 import { AssetModule } from './modules/asset/asset.module';
+import { NodeModule } from './modules/node/node.module';
 
 @Module({
   imports: [
@@ -76,6 +77,7 @@ import { AssetModule } from './modules/asset/asset.module';
       },
     }),
     AssetModule,
+    NodeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
