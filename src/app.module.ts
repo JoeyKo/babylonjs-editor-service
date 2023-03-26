@@ -3,11 +3,13 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
+import { MinioModule } from './modules/nestjs-minio';
 import * as joi from 'joi';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
 import { AssetModule } from './modules/asset/asset.module';
 import { NodeModule } from './modules/node/node.module';
+import { FileModule } from './modules/file/file.module';
 
 @Module({
   imports: [
@@ -45,6 +47,20 @@ import { NodeModule } from './modules/node/node.module';
         } as TypeOrmModuleAsyncOptions;
       },
     }),
+    MinioModule.registerAsync({
+      isGlobal: true,
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        return {
+          port: +configService.get('MINIO_PORT'),
+          endPoint: configService.get('MINIO_ENDPOINT'),
+          accessKey: configService.get('MINIO_ROOT_USER'),
+          secretKey: configService.get('MINIO_ROOT_PASSWORD'),
+          useSSL: false
+        };
+      },
+    }),
     WinstonModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -78,6 +94,7 @@ import { NodeModule } from './modules/node/node.module';
     }),
     AssetModule,
     NodeModule,
+    FileModule,
   ],
   controllers: [AppController],
   providers: [AppService],
