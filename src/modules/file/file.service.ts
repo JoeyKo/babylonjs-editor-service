@@ -31,15 +31,15 @@ export class FileService {
     return await this.fileRepository.save(createFileDto);
   }
 
-  async uploadFiles(
+  async uploadFile(
     objectName: string,
     stream: string | internal.Readable | Buffer,
     metaData?: ItemBucketMetadata,
-  ): Promise<UploadedObjectInfo> {
+  ): Promise<void> {
     try {
       const found = await this.bucketExists(this.BUCKET_NAME);
       if (found) {
-        return await this.minioService.putObject(
+        await this.minioService.putObject(
           this.BUCKET_NAME,
           objectName,
           stream,
