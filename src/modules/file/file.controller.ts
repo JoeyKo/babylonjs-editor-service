@@ -45,7 +45,9 @@ export class FileController {
     const projectId = '1';
     const fileRes = {};
     for (const file of files) {
-      console.log(file);
+      file.originalname = Buffer.from(file.originalname, 'latin1').toString(
+        'utf8',
+      );
       // userId projectId
       const path = `${userId}/${projectId}/`;
       await this.fileService.uploadFile(path + file.originalname, file.buffer, {
@@ -64,6 +66,13 @@ export class FileController {
           `${userId}/${projectId}/`,
           file.originalname,
         );
+
+        data['modelSources'] = [
+          {
+            name: file.originalname,
+            url: this.getRootUrl(path) + file.originalname,
+          },
+        ];
 
         // Upload base64 image
         const textures = data.textures;
@@ -106,9 +115,18 @@ export class FileController {
         }
         data.textures = Object.values(fileTextures);
         fileRes[file.originalname] = data;
-      } else {
+      } else if (file.mimetype.match('image.*')) {
         fileRes[file.originalname] = {
           textures: [
+            {
+              name: file.originalname,
+              url: this.getRootUrl(path) + file.originalname,
+            },
+          ],
+        };
+      } else {
+        fileRes[file.originalname] = {
+          binaries: [
             {
               name: file.originalname,
               url: this.getRootUrl(path) + file.originalname,
