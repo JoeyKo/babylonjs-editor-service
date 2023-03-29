@@ -13,7 +13,9 @@ class Utils {
   }
 
   public static Is3DModelFile(filename: string) {
-    return Utils.MESH_EXTENSIONS.includes(this.GetFileExtension(filename));
+    return Utils.MESH_EXTENSIONS.includes(
+      this.GetFileExtension(filename).toLocaleLowerCase(),
+    );
   }
 }
 

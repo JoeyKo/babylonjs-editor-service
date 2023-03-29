@@ -146,7 +146,7 @@ export class FileController {
         .pipe(
           catchError((error: AxiosError) => {
             this.logger.error(error);
-            throw 'An error happened!';
+            throw 'Cannot load model file!';
           }),
         ),
     );
