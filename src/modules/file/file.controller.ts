@@ -115,6 +115,9 @@ export class FileController {
         }
         data.textures = Object.values(fileTextures);
         fileRes[file.originalname] = data;
+
+        // materials
+        // metadata: {textureId: ''}
       } else if (file.mimetype.match('image.*')) {
         fileRes[file.originalname] = {
           textures: [
